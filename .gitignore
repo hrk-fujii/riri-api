@@ -1,0 +1,8 @@
+/app.env
+/mysql/mysql.env
+/src/config/config.json
+
+/src/bin
+/src/node_modules
+
+/mysql/data
