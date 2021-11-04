@@ -1,8 +1,9 @@
 // response error
-module.exports = (res, message) => {
+module.exports = (res, message, devMessage) => {
+    res.status(400);
     if (process.env.NODE_ENV === 'development'){
         console.log(message);
+        return res.json({'error': devMessage});
     }
-    res.status(500);
-    res.json({'success': false, 'message': message});
+    res.json({'error': message});
 }
