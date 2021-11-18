@@ -1,4 +1,4 @@
-var reserve = require('../../models/reserve');
+var Reserve = require('../../models/Reserve');
 var sendError = require('../../utils/sendError');
 var validator = require('../../utils/validator');
 
@@ -9,7 +9,7 @@ module.exports = (req, res) => {
     if (validatorMessage) {
         return sendError(res, validatorMessage, validatorMessage);
     }
-    reserve.find({
+    Reserve.find({
         "where": {
             "room_id": res.query.roomId
         }
