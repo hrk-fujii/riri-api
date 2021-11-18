@@ -1,4 +1,4 @@
-var reserve = require('../../models').reserve;
+var reserve = require('../../models/reserve');
 var sendError = require('../../utils/sendError');
 var validator = require('../../utils/validator');
 
