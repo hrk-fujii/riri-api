@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class reserve extends Model {
+  class Reserve extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -11,27 +11,29 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      reserve.belongsTo(models.user, {
-        foreignKey: user_id
+      Reserve.belongsTo(models.User, {
+        foreignKey: "user_id"
       });
-      reserve.belongsTo(models.room, {
-        foreignKey: room_id
+      Reserve.belongsTo(models.Room, {
+        foreignKey: "room_id"
       });
     }
   };
-  reserve.init({
+  Reserve.init({
     name: DataTypes.STRING,
+    user_id: DataTypes.INTEGER,
+    room_id: DataTypes.INTEGER,
     start_at: DataTypes.DATE,
     end_at: DataTypes.DATE,
     type: DataTypes.INTEGER,
     discription: DataTypes.TEXT
   }, {
     sequelize,
-    modelName: 'reserve',
+    modelName: 'Reserve',
   });
   
-  reserve.prototype.checkConflict = async function(valie) {
-    const res = await reserve.findAll({
+  Reserve.prototype.checkConflict = async function(valie) {
+    const res = await Reserve.findAll({
       where: {
         start_at: {
           [Op.lte]: value
@@ -45,5 +47,5 @@ module.exports = (sequelize, DataTypes) => {
       throw new Error("time conflict");
     }
   }
-  return reserve;
+  return Reserve;
 };

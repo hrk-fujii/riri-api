@@ -11,12 +11,13 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User_confirmation.belongsTo(models.user, {
-        foreignKey: user_id
+      User_confirmation.belongsTo(models.User, {
+        foreignKey: "user_id"
       })
     }
   };
   User_confirmation.init({
+    user_id: DataTypes.INTEGER,
     confirmation_code: DataTypes.STRING
   }, {
     sequelize,
