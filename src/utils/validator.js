@@ -1,5 +1,7 @@
+const sendError = require("./sendError");
+
 module.exports = {
-    params: (val, required) => {
+    params:  (val, required) => {
         return "";
     }
 }

@@ -1,16 +1,16 @@
-var room = require('../../models').room;
-var reserve = require('../../models').reserve;
+var Room = require('../../models').Room;
+var Reserve = require('../../models').Reserve;
 var sendError = require('../../utils/sendError');
 var validator = require('../../utils/validator');
 
 // set reservation
-const createReservation = (data) => {
-    reserve.create({
+const createReservation = (res, data) => {
+    Reserve.create({
         name: data.name,
         room_id: data.roomId,
         user_id: data.userInfo.id,
         start_at: data.startAt,
-        end_at: endAt,
+        end_at: data.endAt,
         type: data.type
     })    .then((v) => {
         return res.json({success: true});
@@ -20,14 +20,14 @@ const createReservation = (data) => {
 }
 
 module.exports = (req, res) => {
-    let validatorMessage = validator.param(res.data, ["roomId", "startAt", "endAt", "name", "discription"]);
+    let validatorMessage = validator.params(req.body, ["roomId", "startAt", "endAt", "name", "discription"]);
     if (validatorMessage) {
         return sendError(res, validatorMessage, validatorMessage);
     }
     
     // roomId is room?
-    room.findByPk(res.data.roomId).then((val) =>{
-        createReservation(req.data);
+    Room.findByPk(req.body.roomId).then((val) =>{
+        createReservation(res, req.body);
     }, (err) => {
         sendError(res, "create reservation error", err);
     });
