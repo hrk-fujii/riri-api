@@ -1,4 +1,4 @@
-var Room = require('../../models').room;
+var Room = require('../../models').Room;
 var sendError = require('../../utils/sendError');
 
 // get rooms
