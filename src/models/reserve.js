@@ -32,20 +32,5 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Reserve',
   });
   
-  Reserve.prototype.checkConflict = async function(valie) {
-    const res = await Reserve.findAll({
-      where: {
-        start_at: {
-          [Op.lte]: value
-        },
-        end_at: {
-          [Op.gte]: value
-        }
-      }
-    });
-    if (res) {
-      throw new Error("time conflict");
-    }
-  }
-  return Reserve;
+    return Reserve;
 };
