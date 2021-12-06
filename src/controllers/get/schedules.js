@@ -1,4 +1,6 @@
-var Reserve = require('../../models/Reserve');
+var Op = require("sequelize").Op;
+
+var Reserve = require('../../models').Reserve;
 var sendError = require('../../utils/sendError');
 var validator = require('../../utils/validator');
 
@@ -9,9 +11,12 @@ module.exports = (req, res) => {
     if (validatorMessage) {
         return sendError(res, validatorMessage, validatorMessage);
     }
-    Reserve.find({
+    Reserve.findAll({
         "where": {
-            "room_id": res.query.roomId
+            "room_id": req.query.roomId,
+            start_at: {
+                [Op.between]: [req.query.date + " 00:00:00", req.query.date + " 23:59:59"]
+            }
         }
     }).then((val) =>{
         res.json({'reservations': val});
