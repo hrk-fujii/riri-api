@@ -11,11 +11,21 @@ module.exports = (req, res) => {
     if (validatorMessage) {
         return sendError(res, validatorMessage, validatorMessage);
     }
+
+    let dayStart = new Date(req.query.date);
+    dayStart.setHours(0);
+    dayStart.setMinutes(0);
+    dayStart.setHours(dayStart.getHours() - 9);
+    let dayEnd = new Date(req.query.date);
+    dayEnd.setHours(23);
+    dayEnd.setMinutes(59);
+    dayEnd.setSeconds(59.999);
+    dayEnd.setHours(dayEnd.getHours() - 9);
     Reserve.findAll({
         "where": {
             "room_id": req.query.roomId,
             start_at: {
-                [Op.between]: [req.query.date + " 00:00:00", req.query.date + " 23:59:59"]
+                [Op.between]: [dayStart, dayEnd]
             }
         }
     }).then((val) =>{
